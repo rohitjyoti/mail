@@ -5,5 +5,3 @@ python-dotenv
 streamlit
 pandas
 chromadb
-uuid
-re
