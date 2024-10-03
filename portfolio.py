@@ -2,15 +2,16 @@ import pandas as pd
 import chromadb
 import uuid
 
-
 class Portfolio:
-    def __init__(self, file_path="resources/my_projects.csv"):
-        self.file_path = file_path
-        self.data = pd.read_csv(file_path)
+    def __init__(self):
+        self.data = None
         self.chroma_client = chromadb.PersistentClient('vectorstore')
         self.collection = self.chroma_client.get_or_create_collection(name="portfolio")
 
-    def load_portfolio(self):
+    def load_portfolio(self, uploaded_file):
+        # Read the uploaded file into a DataFrame
+        self.data = pd.read_excel(uploaded_file)
+
         if not self.collection.count():
             for _, row in self.data.iterrows():
                 self.collection.add(documents=row["Techstack"],
